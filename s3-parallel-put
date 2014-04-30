@@ -141,11 +141,10 @@ def walk_tar(source, options):
                 yield (key_name, dict(content=content, path=path))
 
 def walk_filelist(source, options):
-    try:
-        filelist = open(source, 'r:')
-        for line in filelist:
-            key_name = os.path.normpath(os.path.join(options.prefix, line))
-            yield (key_name, dict(path=line))
+    filelist = open(source, 'r:')
+    for line in filelist:
+        key_name = os.path.normpath(os.path.join(options.prefix, line))
+        yield (key_name, dict(path=line))
 
 
 def walker(walk, put_queue, sources, options):
