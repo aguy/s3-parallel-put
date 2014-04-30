@@ -143,9 +143,11 @@ def walk_tar(source, options):
 def walk_filelist(source, options):
     filelist = open(source, 'r:')
     for line in filelist:
-        key_name = os.path.normpath(os.path.join(options.prefix, line))
-        yield (key_name, dict(path=line))
-
+        path = line.strip()
+        if not os.path.isfile(path):
+            continue
+        key_name = os.path.normpath(os.path.join(options.prefix, path))
+        yield (key_name, dict(path=path))
 
 def walker(walk, put_queue, sources, options):
     logger = logging.getLogger('%s[walker-%d]' % (os.path.basename(sys.argv[0]), current_process().pid))
